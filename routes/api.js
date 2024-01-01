@@ -8,11 +8,19 @@ module.exports = function (app) {
 
   app.route('/api/check')
     .post((req, res) => {
-
+   
     });
     
   app.route('/api/solve')
     .post((req, res) => {
-
+      const puzzle = req.body.puzzle;
+      if (!puzzle) {
+        return res.json({ error: 'Required field missing' });
+      };
+      const solution = solver.solve(puzzle);
+      if (solution.error) {
+        return res.json(solution);
+      };
+      return res.json({solution});
     });
 };
